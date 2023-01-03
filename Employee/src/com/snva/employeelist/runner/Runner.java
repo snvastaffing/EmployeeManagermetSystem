@@ -1,11 +1,14 @@
 package com.snva.employeelist.runner;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 import com.snva.employeelist.uiservice.EmployeeUIServiceImpl;
+import com.snva.employeelist.uiservice.FileUiServiceImpl;
 import com.snva.employeelist.uiservice.IEmployeeUIService;
 import com.snva.employeelist.bean.Employee;
+import com.snva.employeelist.uiservice.IFileUiService;
 import com.snva.employeelist.util.ReadUtil;
 
 /**
@@ -16,13 +19,15 @@ public class Runner
 	private ReadUtil m_readUtil;
 	private IEmployeeUIService m_EmployeeUIService;
 
+	private IFileUiService m_FileUiService;
+
 	/**
 	 *This is a default constructor of the class
 	 */
-	public Runner()
-	{
+	public Runner() throws IOException {
 		m_readUtil=new ReadUtil();
 		m_EmployeeUIService=new EmployeeUIServiceImpl();
+		m_FileUiService= new FileUiServiceImpl();
 		checkUserOptions();
 	}
 
@@ -31,8 +36,7 @@ public class Runner
 	 *call the functions accordingly.
 	 *
 	 */
-	private void checkUserOptions()
-	{
+	private void checkUserOptions() throws IOException {
 		int choice=0;
 		List<Employee> employeelist=new ArrayList<Employee>();
 		do
@@ -62,7 +66,7 @@ public class Runner
 				case 5 : m_EmployeeUIService.sortEmployee();
 						break;
 
-				case 6 : System.out.println(" Thanks For using this system ");
+				case 6 : m_FileUiService.processFile();
 		          		break;
 				default : System.out.println("wrong choice");
 		           		break;
@@ -73,6 +77,15 @@ public class Runner
 	 *This fuction displays the main menu of the system.
 	 *
 	 */
+
+//	private String m_extension;
+//	private String m_date;
+//	private String m_totalCallTime;
+//	private String m_totalCallNumber;
+//	private String m_averageCall;
+//	private String m_firstCall;
+//	private String m_lastCall;
+
 	private void displayMainMenu()
 	{
 		System.out.println("     Main Menu     ");
@@ -82,13 +95,14 @@ public class Runner
 		System.out.println("3. Show All Employees Information ");
 		System.out.println("4. Search An Employee ");
 		System.out.println("5. Sort By First Name ");
-		System.out.println("6. Exit ");
+		System.out.println("6. Read a Files & Clean it");
+		System.out.println("7. Exit ");
 	}
 
 	/**
 	 * This is the main fuction which runs the default constructor of the class.
 	 */
-	public static void main(String[] args) {
+	public static void main(String[] args) throws IOException {
 		new Runner();
 	}
 
